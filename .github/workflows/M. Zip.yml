@@ -1,0 +1,24 @@
+name: Extract M.zip
+
+on:
+  push:
+    paths:
+      - 'M.zip'
+  workflow_dispatch:
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract M.zip
+        run: unzip M.zip -d extracted
+
+      - name: Commit extracted files
+        run: |
+          git config --local user.email "github-actions@users.noreply.github.com"
+          git config --local user.name "github-actions"
+          git add extracted
+          git commit -m "Extracted M.zip"
+          git push origin main
